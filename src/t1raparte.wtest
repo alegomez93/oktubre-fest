@@ -1,0 +1,55 @@
+import cervezas.*
+import personas.*
+
+
+describe "test 1er requerimiento" 
+{
+	const corona = new Rubia(contLupulo = 10, pais = "Alemania", graduacion = 9)
+	const hofbrau = new Negra(contLupulo = 8, pais = "Belgica", graduacionReglamentaria = 15)
+	const quilmes = new Roja(contLupulo = 12, pais = "Brasil", graduacionReglamentaria = 10)
+	const stella = new Negra(contLupulo = 15, pais = "Brasil", graduacionReglamentaria = 12)
+	const grolsch = new Negra(contLupulo = 2, pais = "Chile", graduacionReglamentaria = 12)
+	const jarra1 = new Jarra(capacidad = 2, marca = corona)
+	const jarra2 = new Jarra(capacidad = 1, marca = hofbrau)
+	const jarra3 = new Jarra(capacidad = 3, marca = quilmes)
+	const jarra4 = new Jarra(capacidad = 4, marca = stella)
+	
+	const perso1 = new Belga(peso = 90, nivelDeAguante = 50)
+	
+	fixture 
+	{
+		perso1.comprarCerveza(jarra1)
+		perso1.comprarCerveza(jarra2)
+		perso1.comprarCerveza(jarra3)
+		perso1.comprarCerveza(jarra4)
+	}
+
+	
+	
+	test "contenido de alcohol"
+	{
+		assert.equals(0.18, jarra1.contenidoDeAlcohol())
+		assert.equals(0.15, jarra2.contenidoDeAlcohol())
+		assert.equals(0.375, jarra3.contenidoDeAlcohol())
+		assert.equals(0.48, jarra4.contenidoDeAlcohol())
+	}
+	
+	test "total de alcohol"
+	{
+		assert.equals(1.185, perso1.cantidadDeAlcoholIngerido())
+	}
+	
+	test "esta ebria"
+	{
+		assert.that(perso1.estaEbria())
+	}
+	
+	test "le gusta una cerveza"
+	{
+		assert.that(perso1.leGustaLaCerveza(corona))
+		assert.that(perso1.leGustaLaCerveza(hofbrau))
+		assert.that(perso1.leGustaLaCerveza(quilmes))
+		assert.that(not perso1.leGustaLaCerveza(grolsch))
+	}
+
+}
