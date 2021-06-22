@@ -1,0 +1,156 @@
+import cervezas.*
+import personas.*
+import carpas.*
+
+
+describe "test 2do requerimiento" 
+{
+	const corona = new Rubia(contLupulo = 10, pais = "Belgica", graduacion = 9)
+	const hofbrau = new Negra(contLupulo = 8, pais = "Belgica", graduacionReglamentaria = 15)
+	const quilmes = new Roja(contLupulo = 12, pais = "Belgica", graduacionReglamentaria = 10)
+	const stella = new Negra(contLupulo = 15, pais = "Belgica", graduacionReglamentaria = 12)
+	const grolsch = new Negra(contLupulo = 2, pais = "Belgica", graduacionReglamentaria = 12)
+	const jarra1 = new Jarra(capacidad = 2, marca = corona)
+	const jarra2 = new Jarra(capacidad = 1, marca = hofbrau)
+	const jarra3 = new Jarra(capacidad = 3, marca = quilmes)
+	const jarra4 = new Jarra(capacidad = 4, marca = stella)
+	
+	const perso1 = new Belga(peso = 90, nivelDeAguante = 120, musicaTradicional = true)
+	const perso2 = new Aleman(peso = 120, nivelDeAguante = 30, musicaTradicional = false)
+	const perso3 = new Checo(peso = 70, nivelDeAguante = 90, musicaTradicional = true)
+	const perso4 = new Belga(peso = 100, nivelDeAguante = 70, musicaTradicional = true)
+	
+	const carpa1 = new Carpa(limiteDeGente = 8, bandaTradicional = true, marcaDeCeveza = corona)
+	const carpa2 = new Carpa(limiteDeGente = 5, bandaTradicional = false, marcaDeCeveza = hofbrau)
+	const carpa3 = new Carpa(limiteDeGente = 4, bandaTradicional = true, marcaDeCeveza = quilmes)
+	const carpa4 = new Carpa(limiteDeGente = 2, bandaTradicional = false, marcaDeCeveza = grolsch)
+
+	
+	fixture 
+	{
+		perso1.comprarCerveza(jarra1)
+		perso1.comprarCerveza(jarra2)
+		perso1.comprarCerveza(jarra3)
+		perso1.comprarCerveza(jarra4)
+		
+		perso2.comprarCerveza(jarra1)
+		perso2.comprarCerveza(jarra2)
+		perso2.comprarCerveza(jarra3)
+		perso2.comprarCerveza(jarra4)
+		
+		perso3.comprarCerveza(jarra1)
+		perso3.comprarCerveza(jarra2)
+		perso3.comprarCerveza(jarra3)
+		perso3.comprarCerveza(jarra4)
+		
+		perso4.comprarCerveza(jarra1)
+		perso4.comprarCerveza(jarra2)
+		perso4.comprarCerveza(jarra3)
+		perso4.comprarCerveza(jarra4)
+		
+		carpa1.ingresar(perso1)   // en la carpa 1 entran dos personas
+	
+		
+		carpa2.ingresar(perso1)  // en la carpa 2 entran tres personas
+		carpa2.ingresar(perso2)
+		carpa2.ingresar(perso3)
+		
+		carpa3.ingresar(perso1)  // en la carpa 3 entran cuatro personas
+		carpa3.ingresar(perso2)
+		carpa3.ingresar(perso3)
+	
+		
+		carpa4.ingresar(perso1)  // en la carpa 4 entra una persona
+
+	}
+
+	
+	
+	test "Saber si una persona quiere entrar a una carpa"
+	{
+		assert.that(perso1.quiereEntrarA(carpa1))
+		assert.that(not perso2.quiereEntrarA(carpa1))
+		assert.that(perso3.quiereEntrarA(carpa1))
+		assert.that(perso4.quiereEntrarA(carpa1))
+		
+		assert.that(not perso1.quiereEntrarA(carpa2))
+		assert.that(not perso2.quiereEntrarA(carpa2))
+		assert.that(not perso3.quiereEntrarA(carpa2))
+		assert.that(not perso4.quiereEntrarA(carpa2))
+		
+		assert.that(perso1.quiereEntrarA(carpa3))
+		assert.that(not perso2.quiereEntrarA(carpa3))
+		assert.that(perso3.quiereEntrarA(carpa3))
+		assert.that(perso4.quiereEntrarA(carpa3))
+		
+		assert.that(not perso1.quiereEntrarA(carpa4))
+		assert.that(not perso2.quiereEntrarA(carpa4))
+		assert.that(not perso3.quiereEntrarA(carpa4))
+		assert.that(not perso4.quiereEntrarA(carpa4))
+	}
+	
+	
+	test "Saber si una carpa deja ingresar a una persona"
+	{
+		assert.that(carpa1.permitirIngresar(perso1))
+		assert.that(not carpa1.permitirIngresar(perso2))
+		assert.that(carpa1.permitirIngresar(perso3))
+		assert.that(not carpa1.permitirIngresar(perso4))
+		
+		assert.that(carpa2.permitirIngresar(perso1))
+		assert.that(not carpa2.permitirIngresar(perso2))
+		assert.that(carpa2.permitirIngresar(perso3))
+		assert.that(not carpa2.permitirIngresar(perso4))
+		
+		assert.that(carpa3.permitirIngresar(perso1))
+		assert.that(not carpa3.permitirIngresar(perso2))
+		assert.that(carpa3.permitirIngresar(perso3))
+		assert.that(not carpa3.permitirIngresar(perso4))
+		
+		assert.that(carpa4.permitirIngresar(perso1))
+		assert.that(not carpa4.permitirIngresar(perso2))
+		assert.that(carpa4.permitirIngresar(perso3))
+		assert.that(not carpa4.permitirIngresar(perso4))
+	}
+	
+	test "Saber si una persona puede entrar a una carpa"
+	{
+		assert.that(perso1.puedeEntrarA(carpa1))
+		assert.that(not perso2.puedeEntrarA(carpa1))
+		assert.that(perso3.puedeEntrarA(carpa1))
+		assert.that(not perso4.puedeEntrarA(carpa1))
+		
+		assert.that(not perso1.puedeEntrarA(carpa2))
+		assert.that(not perso2.puedeEntrarA(carpa2))
+		assert.that(not perso3.puedeEntrarA(carpa2))
+		assert.that(not perso4.puedeEntrarA(carpa2))
+		
+		assert.that(perso1.puedeEntrarA(carpa3))
+		assert.that(not perso2.puedeEntrarA(carpa3))
+		assert.that(perso3.puedeEntrarA(carpa3))
+		assert.that(not perso4.puedeEntrarA(carpa3))
+		
+		assert.that(not perso1.puedeEntrarA(carpa4))
+		assert.that(not perso2.puedeEntrarA(carpa4))
+		assert.that(not perso3.puedeEntrarA(carpa4))
+		assert.that(not perso4.puedeEntrarA(carpa4))
+	}
+	
+	test "Saber cuantos ebrios empedernidos hay dentro de una carpa"
+	{
+		assert.equals(1, carpa1.cantidadDeEbriosEmpedernidos())
+		assert.equals(3, carpa2.cantidadDeEbriosEmpedernidos())
+		assert.equals(3, carpa3.cantidadDeEbriosEmpedernidos())
+		assert.equals(1, carpa4.cantidadDeEbriosEmpedernidos())
+	}
+	
+	
+	test "Saber si una persona es patriota"
+	{
+		assert.that(perso1.esPatriota())
+		assert.that(not perso2.esPatriota())
+		assert.that(not perso3.esPatriota())
+		assert.that(perso4.esPatriota())
+	}
+
+}

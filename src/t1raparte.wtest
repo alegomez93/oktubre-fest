@@ -14,7 +14,7 @@ describe "test 1er requerimiento"
 	const jarra3 = new Jarra(capacidad = 3, marca = quilmes)
 	const jarra4 = new Jarra(capacidad = 4, marca = stella)
 	
-	const perso1 = new Belga(peso = 90, nivelDeAguante = 50)
+	const perso1 = new Belga(peso = 90, nivelDeAguante = 50, musicaTradicional = true)
 	
 	fixture 
 	{
